@@ -1,33 +1,34 @@
-# uptime-kuma-api
+# uptime-kuma-api-v2
 
 A wrapper for the Uptime Kuma Socket.IO API
 ---
-uptime-kuma-api is a Python wrapper for the [Uptime Kuma](https://github.com/louislam/uptime-kuma) Socket.IO API.
+uptime-kuma-api-v2 is a Python wrapper for the [Uptime Kuma](https://github.com/louislam/uptime-kuma) Socket.IO API.
 
-This package was developed to configure Uptime Kuma with Ansible. The Ansible collection can be found at https://github.com/lucasheld/ansible-uptime-kuma.
+Based on Original Version by https://github.com/lucasheld/uptime-kuma-api
+
 
 Python version 3.7+ is required.
 
 Supported Uptime Kuma versions:
 
-| Uptime Kuma     | uptime-kuma-api |
+| Uptime Kuma     | uptime-kuma-api-v2 |
 |-----------------|-----------------|
-| 1.21.3 - 1.23.2 | 1.0.0 - 1.2.1   |
-| 1.17.0 - 1.21.2 | 0.1.0 - 0.13.0  |
+| 2.0.0-beta.2     | 1.0.0 - 1.0.1   |
+
 
 Installation
 ---
-uptime-kuma-api is available on the [Python Package Index (PyPI)](https://pypi.org/project/uptime-kuma-api/).
+uptime-kuma-api-v2 is available on the [Python Package Index (PyPI)](https://pypi.org/project/uptime-kuma-api-v2/).
 
 You can install it using pip:
 
 ```
-pip install uptime-kuma-api
+pip install uptime-kuma-api-v2
 ```
 
 Documentation
 ---
-The API Reference is available on [Read the Docs](https://uptime-kuma-api.readthedocs.io).
+The API Reference is available on [Read the Docs](https://uptime-kuma-api-v2.readthedocs.io).
 
 Example
 ---
