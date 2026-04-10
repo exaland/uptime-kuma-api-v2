@@ -2010,15 +2010,19 @@ class UptimeKumaApi(object):
             raise Timeout(e)
 
         config = r1["config"]
-        config.update(r2["config"])
+        config.update(r2.get("config", {}))
 
+        # Kuma 2.x sometimes omits these response keys on a clean instance
+        # (no incident posted, no maintenance window). The previous code
+        # unconditionally indexed them and crashed with KeyError.
         data = {
             **config,
-            "incident": r2["incident"],
-            "publicGroupList": r2["publicGroupList"],
-            "maintenanceList": r2["maintenanceList"]
+            "incident": r2.get("incident"),
+            "publicGroupList": r2.get("publicGroupList", []),
+            "maintenanceList": r2.get("maintenanceList", []),
         }
-        parse_incident_style(data["incident"])
+        if data["incident"] is not None:
+            parse_incident_style(data["incident"])
         # convert sendUrl from int to bool
         for i in data["publicGroupList"]:
             for j in i["monitorList"]:
@@ -2129,12 +2133,26 @@ class UptimeKumaApi(object):
                 ]
             }
         """
+        # Bypass _build_status_page_data and preserve the full config from
+        # get_status_page. The builder strips the config down to a fixed set
+        # of v1.x-era fields and rebuilds, but Kuma 2.x has more config
+        # fields (analyticsType, analyticsId, analyticsScriptUrl,
+        # autoRefreshInterval, showOnlyLastHeartbeat, rssTitle) that the
+        # server validates on save — stripping them produces an
+        # "Invalid analytics type" error from the server.
+        #
+        # Critically: do NOT coerce null fields to defaults. Overriding null
+        # analyticsType to "none" produces the same "Invalid analytics type"
+        # error. The server accepts whatever it returned; round-trip it.
         status_page = self.get_status_page(slug)
-        status_page.pop("incident")
-        status_page.pop("maintenanceList")
-        status_page.pop("autoRefreshInterval")
+        public_group_list = status_page.pop("publicGroupList", [])
+        status_page.pop("incident", None)
+        status_page.pop("maintenanceList", None)
+        if "publicGroupList" in kwargs:
+            public_group_list = kwargs.pop("publicGroupList")
         status_page.update(kwargs)
-        data = self._build_status_page_data(**status_page)
+        icon = status_page.get("icon", "/icon.svg")
+        data = (slug, status_page, icon, public_group_list)
         r = self._call('saveStatusPage', data)
 
         # uptime kuma does not send the status page list event when a status page is saved
