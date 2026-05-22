@@ -13,7 +13,7 @@ Supported Uptime Kuma versions:
 
 | Uptime Kuma     | uptime-kuma-api-v2 |
 |-----------------|-----------------|
-| 2.0.0-beta.2     | 1.0.0 - 1.0.1   |
+| 2.0.0-beta.2     | 1.0.0 - 1.0.2   |
 
 
 Installation
