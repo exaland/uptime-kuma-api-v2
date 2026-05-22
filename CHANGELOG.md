@@ -1,5 +1,12 @@
 ## Changelog
 
+### Unreleased
+
+#### Bugfixes
+- `get_status_page` no longer crashes with `KeyError: 'incident'` against Kuma 2.x. Kuma 2.x's public status page response (`/api/status-page/{slug}`) omits the `incident` and `maintenanceList` keys when no incident has been posted and no maintenance window exists. Switched to `.get(...)` with safe defaults and only call `parse_incident_style` when an incident is actually present.
+- `save_status_page` no longer fails with `Invalid analytics type` against Kuma 2.x. The previous implementation called `_build_status_page_data` which strips the config down to a fixed set of v1.x-era fields and rebuilds. Kuma 2.x has additional config fields (`analyticsType`, `analyticsId`, `analyticsScriptUrl`, `autoRefreshInterval`, `showOnlyLastHeartbeat`, `rssTitle`) that the server validates on save — stripping them was producing the error. The fix bypasses `_build_status_page_data`, preserves the full config dict from `get_status_page`, only overrides what `kwargs` supplies, and constructs the `(slug, config, icon, public_group_list)` tuple manually. Critically it does not coerce null fields to defaults — overriding null `analyticsType` to `"none"` produces the same error; the server accepts whatever it gave us.
+- Both fixes validated end-to-end against a live Kuma 2.2.1 instance.
+
 ### Release 1.2.1
 
 #### Bugfixes
