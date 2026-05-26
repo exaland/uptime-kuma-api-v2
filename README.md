@@ -1,5 +1,5 @@
 # uptime-kuma-api-v2
-
+[![Upload Python Package](https://github.com/exaland/uptime-kuma-api-v2/actions/workflows/python-publish.yml/badge.svg)](https://github.com/exaland/uptime-kuma-api-v2/actions/workflows/python-publish.yml)
 A wrapper for the Uptime Kuma Socket.IO API
 ---
 uptime-kuma-api-v2 is a Python wrapper for the [Uptime Kuma](https://github.com/louislam/uptime-kuma) Socket.IO API.
