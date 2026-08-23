@@ -1,5 +1,8 @@
 version: 2
 
+build:
+  os: linux  # or 'windows', 'macos' depending on your target platform
+
 python:
   install:
     - method: pip
