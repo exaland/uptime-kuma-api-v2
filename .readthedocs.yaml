@@ -1,7 +1,7 @@
 version: 2
 
 build:
-  os: linux  # or 'windows', 'macos' depending on your target platform
+  os: ubuntu-22.04
 
 python:
   install:
