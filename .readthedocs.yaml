@@ -1,9 +1,7 @@
 version: 2
 
 build:
-  os: ubuntu-22.04
-
-python:
-  install:
-    - method: pip
-      path: .
+  os: "ubuntu-22.04"
+  tools:
+    - python3
+    - pip
